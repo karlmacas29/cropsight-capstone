@@ -22,21 +22,23 @@ class ClickButton extends StatelessWidget {
       padding: const EdgeInsets.only(top: 2),
       child: TextButton(
           onPressed: function,
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: backgroundColor,
-              border: Border.all(color: borderColor),
-            ),
-            alignment: Alignment.center,
-            width: 200,
-            height: 40,
-            child: Text(
-              text,
-              style: TextStyle(
-                  color: textColor,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'Inter'),
+          child: Ink(
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: backgroundColor,
+                border: Border.all(color: borderColor),
+              ),
+              alignment: Alignment.center,
+              width: 200,
+              height: 40,
+              child: Text(
+                text,
+                style: TextStyle(
+                    color: textColor,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Inter'),
+              ),
             ),
           )),
     );

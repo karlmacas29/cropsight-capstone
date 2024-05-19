@@ -1,8 +1,10 @@
 import 'package:cropsight/views/navigation/cropsight.dart';
 import 'package:cropsight/views/navigation/home.dart';
+import 'package:cropsight/views/navigation/settings.dart';
 import 'package:cropsight/views/navigation/solution.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:provider/provider.dart';
 
 class HomePageNav extends StatefulWidget {
   const HomePageNav({super.key});
@@ -26,7 +28,6 @@ class _HomePageNavState extends State<HomePageNav> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: PreferredSize(
         preferredSize: const Size.square(80),
         child: Container(
@@ -34,10 +35,16 @@ class _HomePageNavState extends State<HomePageNav> {
           child: AppBar(
             scrolledUnderElevation: 0.0,
             actions: [
-              IconButton(onPressed: () {}, icon: const Icon(Icons.settings))
+              IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const SettingsApp()));
+                  },
+                  icon: const Icon(Icons.settings))
             ],
             leadingWidth: 28,
-            backgroundColor: Colors.white,
             leading: Icon(
               _iconappbar[_currentIndex],
               color: const Color.fromRGBO(2, 101, 0, 1),
@@ -52,11 +59,13 @@ class _HomePageNavState extends State<HomePageNav> {
       ),
       body: tabsnav[_currentIndex],
       bottomNavigationBar: Container(
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.only(
+        decoration: BoxDecoration(
+          color: Theme.of(context).brightness == Brightness.light
+              ? Colors.white
+              : Colors.black,
+          borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(20), topRight: Radius.circular(20)),
-          boxShadow: [
+          boxShadow: const [
             BoxShadow(
                 color: Colors.grey,
                 blurRadius: 10,
@@ -76,10 +85,11 @@ class _HomePageNavState extends State<HomePageNav> {
             },
             padding: const EdgeInsets.all(16),
             gap: 8,
-            backgroundColor: Colors.white,
-            activeColor: Colors.white,
             tabBackgroundColor: const Color.fromRGBO(2, 101, 0, 1),
-            color: Colors.black,
+            color: Theme.of(context).brightness != Brightness.light
+                ? Colors.white
+                : Colors.black,
+            activeColor: Colors.white,
             tabs: const [
               GButton(
                 icon: Icons.home_rounded,

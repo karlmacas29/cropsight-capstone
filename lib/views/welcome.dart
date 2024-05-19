@@ -1,4 +1,3 @@
-import 'package:cropsight/models/buttons.dart';
 import 'package:cropsight/views/navigation/homepage.dart';
 import 'package:flutter/material.dart';
 
@@ -45,7 +44,7 @@ class _WelcomePageOneState extends State<WelcomePageOne> {
                 Text(
                   'Crop',
                   style: TextStyle(
-                      color: Color.fromRGBO(2, 101, 0, 1),
+                      color: Color.fromRGBO(0, 191, 98, 1),
                       fontFamily: 'Inter',
                       fontSize: 64,
                       fontWeight: FontWeight.bold),
@@ -80,16 +79,30 @@ class _WelcomePageOneState extends State<WelcomePageOne> {
             const SizedBox(
               height: 100,
             ),
-            ClickButton(
-              backgroundColor: const Color.fromRGBO(2, 101, 0, 1),
-              borderColor: const Color.fromRGBO(2, 101, 0, 1),
-              text: 'Lets get started',
-              textColor: Colors.white,
-              function: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const HomePageNav()));
-              },
-            ),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const HomePageNav()));
+                },
+                style: const ButtonStyle(
+                  fixedSize: WidgetStatePropertyAll(Size(200, 35)),
+                  backgroundColor:
+                      WidgetStatePropertyAll(Color.fromRGBO(2, 101, 0, 1)),
+                ),
+                child: const Text(
+                  'Lets get started',
+                  style: TextStyle(color: Colors.white),
+                ))
+            // ClickButton(
+            //   backgroundColor: const Color.fromRGBO(2, 101, 0, 1),
+            //   borderColor: const Color.fromRGBO(2, 101, 0, 1),
+            //   text: 'Lets get started',
+            //   textColor: Colors.white,
+            //   function: () {
+            //     Navigator.of(context).push(MaterialPageRoute(
+            //         builder: (context) => const HomePageNav()));
+            //   },
+            // ),
           ],
         ),
       ]),
