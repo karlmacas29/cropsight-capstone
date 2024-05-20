@@ -46,10 +46,35 @@ class SettingsApp extends StatefulWidget {
 }
 
 class _SettingsAppState extends State<SettingsApp> {
+  Icon? icon;
+  Text? label;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (Theme.of(context).brightness == Brightness.light) {
+      setState(() {
+        icon = const Icon(Icons.sunny);
+        label = const Text('Theme Mode (Light Mode)');
+      });
+    } else {
+      setState(() {
+        icon = const Icon(Icons.dark_mode);
+        label = const Text('Theme Mode (Dark Mode)');
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).brightness == Brightness.light
+          ? const Color.fromRGBO(244, 253, 255, 1)
+          : const Color.fromRGBO(18, 18, 18, 1),
       appBar: AppBar(
+        backgroundColor: Theme.of(context).brightness == Brightness.light
+            ? const Color.fromRGBO(244, 253, 255, 1)
+            : const Color.fromRGBO(18, 18, 18, 1),
         automaticallyImplyLeading: true,
         elevation: 0.0,
         scrolledUnderElevation: 0.0,
@@ -66,13 +91,13 @@ class _SettingsAppState extends State<SettingsApp> {
                 onTap: () {},
               ),
               ListTile(
-                leading: Theme.of(context).brightness == Brightness.light
-                    ? const Icon(Icons.sunny)
-                    : const Icon(Icons.dark_mode),
-                title: Theme.of(context).brightness == Brightness.light
-                    ? const Text('ThemeMode(Light)')
-                    : const Text('ThemeMode(Dark)'),
+                leading: icon,
+                title: label,
                 trailing: PopupMenuButton<String>(
+                  icon: const Icon(Icons.settings),
+                  color: Theme.of(context).brightness == Brightness.light
+                      ? const Color.fromRGBO(244, 253, 255, 1)
+                      : const Color.fromRGBO(18, 18, 18, 1),
                   onSelected: (value) {
                     if (value == 'light') {
                       Provider.of<ThemeProvider>(context, listen: false)

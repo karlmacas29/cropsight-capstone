@@ -4,7 +4,6 @@ import 'package:cropsight/views/navigation/settings.dart';
 import 'package:cropsight/views/navigation/solution.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:provider/provider.dart';
 
 class HomePageNav extends StatefulWidget {
   const HomePageNav({super.key});
@@ -28,11 +27,17 @@ class _HomePageNavState extends State<HomePageNav> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).brightness == Brightness.light
+          ? const Color.fromRGBO(244, 253, 255, 1)
+          : const Color.fromRGBO(18, 18, 18, 1),
       appBar: PreferredSize(
         preferredSize: const Size.square(80),
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 25),
           child: AppBar(
+            backgroundColor: Theme.of(context).brightness == Brightness.light
+                ? const Color.fromRGBO(244, 253, 255, 1)
+                : const Color.fromRGBO(18, 18, 18, 1),
             scrolledUnderElevation: 0.0,
             actions: [
               IconButton(
