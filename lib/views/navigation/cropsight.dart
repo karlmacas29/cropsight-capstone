@@ -56,14 +56,14 @@ class _CropsightTabState extends State<CropsightTab> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SearchBar(
-            elevation: const WidgetStatePropertyAll(0.0),
+            elevation: const WidgetStatePropertyAll(1),
             // onChanged: _filterItems,
             padding: const WidgetStatePropertyAll(
                 EdgeInsets.symmetric(horizontal: 20)),
             backgroundColor: WidgetStatePropertyAll(
                 Theme.of(context).brightness == Brightness.light
                     ? Colors.white
-                    : Colors.black),
+                    : const Color.fromARGB(255, 26, 26, 26)),
             hintText: 'Search...',
             keyboardType: TextInputType.text,
             trailing: const [Icon(Icons.search_rounded)],
@@ -87,7 +87,7 @@ class _CropsightTabState extends State<CropsightTab> {
               builder: (context, snap) {
                 if (snap.connectionState == ConnectionState.waiting) {
                   return const Center(
-                    child: CircularProgressIndicator(),
+                    child: Center(child: CircularProgressIndicator()),
                   );
                 } else if (snap.hasError) {
                   return Center(
@@ -99,7 +99,7 @@ class _CropsightTabState extends State<CropsightTab> {
                     scrollDirection: Axis.vertical,
                     itemCount: insList.cropsightData.insectList.length,
                     physics: const BouncingScrollPhysics(
-                        decelerationRate: ScrollDecelerationRate.normal),
+                        decelerationRate: ScrollDecelerationRate.fast),
                     shrinkWrap: true,
                     itemBuilder: ((context, index) {
                       InsectList insectdt =
@@ -107,13 +107,19 @@ class _CropsightTabState extends State<CropsightTab> {
                       return Padding(
                         padding: const EdgeInsets.symmetric(vertical: 10),
                         child: Material(
+                          borderRadius: BorderRadius.circular(10),
+                          elevation: 1,
+                          color:
+                              Theme.of(context).brightness == Brightness.light
+                                  ? const Color.fromRGBO(244, 253, 255, 1)
+                                  : const Color.fromARGB(255, 41, 41, 41),
                           child: ListTile(
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10)),
                             tileColor:
                                 Theme.of(context).brightness == Brightness.light
                                     ? Colors.white
-                                    : Colors.black,
+                                    : const Color.fromARGB(255, 26, 26, 26),
                             selectedTileColor: Colors.green,
                             onTap: () {
                               Navigator.push(

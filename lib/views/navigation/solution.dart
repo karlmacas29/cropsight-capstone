@@ -51,53 +51,59 @@ class _SolutionTabState extends State<SolutionTab> {
                   itemBuilder: (ctx, i) {
                     InsectManage manageDt =
                         insList.cropsightData.insectManage[i];
-                    return InkWell(
-                      borderRadius: const BorderRadius.all(Radius.circular(20)),
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => ManageDesc(
-                                img: manageDt.insectPic,
-                                name: manageDt.insectName,
-                                culturalMn: manageDt.cultureMn,
-                                biologicalMn: manageDt.biologicalMn,
-                                chemicalMn: manageDt.chemicalMn,
-                              ),
-                            ));
-                      },
-                      child: Ink(
-                        decoration: BoxDecoration(
-                            color:
-                                Theme.of(context).brightness == Brightness.light
-                                    ? Colors.white
-                                    : Colors.black,
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(20))),
-                        child: Padding(
-                          padding: const EdgeInsets.all(15),
-                          child: Column(
-                            children: [
-                              Container(
-                                  decoration: const BoxDecoration(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(10))),
-                                  child: ClipRRect(
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(10)),
-                                    child: Image.network(
-                                      manageDt.insectPic,
-                                      height: 100,
-                                      width: 100,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  )),
-                              Text(
-                                manageDt.insectName,
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.w700, fontSize: 20),
-                              ),
-                            ],
+                    return Material(
+                      elevation: 1,
+                      borderRadius: BorderRadius.circular(20),
+                      child: InkWell(
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(20)),
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ManageDesc(
+                                  img: manageDt.insectPic,
+                                  name: manageDt.insectName,
+                                  culturalMn: manageDt.cultureMn,
+                                  biologicalMn: manageDt.biologicalMn,
+                                  chemicalMn: manageDt.chemicalMn,
+                                ),
+                              ));
+                        },
+                        child: Ink(
+                          decoration: BoxDecoration(
+                              color: Theme.of(context).brightness ==
+                                      Brightness.light
+                                  ? Colors.white
+                                  : const Color.fromARGB(255, 26, 26, 26),
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(20))),
+                          child: Padding(
+                            padding: const EdgeInsets.all(15),
+                            child: Column(
+                              children: [
+                                Container(
+                                    decoration: const BoxDecoration(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(10))),
+                                    child: ClipRRect(
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(10)),
+                                      child: Image.network(
+                                        manageDt.insectPic,
+                                        height: 100,
+                                        width: 100,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    )),
+                                Text(
+                                  manageDt.insectName,
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 20),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),

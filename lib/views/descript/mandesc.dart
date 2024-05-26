@@ -95,7 +95,10 @@ class _ManageDescState extends State<ManageDesc> {
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                     ),
                     ...widget.culturalMn.map((method) => ListTile(
-                          title: Text(method),
+                          title: Text(
+                            method,
+                            textAlign: TextAlign.justify,
+                          ),
                         )),
                     const Text(
                       'Biological',
@@ -103,7 +106,10 @@ class _ManageDescState extends State<ManageDesc> {
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                     ),
                     ...widget.biologicalMn.map((method) => ListTile(
-                          title: Text(method),
+                          title: Text(
+                            method,
+                            textAlign: TextAlign.justify,
+                          ),
                         )),
                     const Text(
                       'Chemical',
@@ -111,7 +117,10 @@ class _ManageDescState extends State<ManageDesc> {
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                     ),
                     ...widget.chemicalMn.map((method) => ListTile(
-                          title: Text(method),
+                          title: Text(
+                            method,
+                            textAlign: TextAlign.justify,
+                          ),
                         ))
                   ],
                 )

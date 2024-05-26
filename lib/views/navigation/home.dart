@@ -177,7 +177,7 @@ class _HomeTabState extends State<HomeTab> {
             shadowColor: Colors.grey,
             color: Theme.of(context).brightness == Brightness.light
                 ? Colors.white
-                : Colors.black,
+                : const Color.fromARGB(255, 26, 26, 26),
             child: const Padding(
               padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               child: Column(
@@ -285,9 +285,16 @@ class _HomeTabState extends State<HomeTab> {
                 },
                 child: Ink(
                   decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                            blurStyle: BlurStyle.outer,
+                            spreadRadius: 0.1,
+                            blurRadius: 0.4,
+                            offset: Offset.fromDirection(1))
+                      ],
                       color: Theme.of(context).brightness == Brightness.light
                           ? Colors.white
-                          : Colors.black,
+                          : const Color.fromARGB(255, 26, 26, 26),
                       borderRadius:
                           const BorderRadius.all(Radius.circular(20))),
                   child: Padding(
@@ -324,9 +331,16 @@ class _HomeTabState extends State<HomeTab> {
                 },
                 child: Ink(
                   decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                            blurStyle: BlurStyle.outer,
+                            spreadRadius: 0.1,
+                            blurRadius: 0.4,
+                            offset: Offset.fromDirection(1))
+                      ],
                       color: Theme.of(context).brightness == Brightness.light
                           ? Colors.white
-                          : Colors.black,
+                          : const Color.fromARGB(255, 26, 26, 26),
                       borderRadius:
                           const BorderRadius.all(Radius.circular(20))),
                   child: Padding(

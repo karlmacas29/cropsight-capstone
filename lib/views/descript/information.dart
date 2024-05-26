@@ -77,19 +77,28 @@ class _InfoPageState extends State<InfoPage> {
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
                     textAlign: TextAlign.justify,
                   ),
-                  Text(widget.desc),
+                  Text(
+                    widget.desc,
+                    textAlign: TextAlign.justify,
+                  ),
                   const Text(
                     'Where to find',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
                     textAlign: TextAlign.justify,
                   ),
-                  Text(widget.inWhere),
+                  Text(
+                    widget.inWhere,
+                    textAlign: TextAlign.justify,
+                  ),
                   const Text(
                     'Damage',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
                     textAlign: TextAlign.justify,
                   ),
-                  Text(widget.inDamage),
+                  Text(
+                    widget.inDamage,
+                    textAlign: TextAlign.justify,
+                  ),
                 ],
               )
             ],

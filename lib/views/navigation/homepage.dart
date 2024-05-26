@@ -67,15 +67,11 @@ class _HomePageNavState extends State<HomePageNav> {
         decoration: BoxDecoration(
           color: Theme.of(context).brightness == Brightness.light
               ? Colors.white
-              : Colors.black,
+              : const Color.fromARGB(255, 26, 26, 26),
           borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(20), topRight: Radius.circular(20)),
           boxShadow: const [
-            BoxShadow(
-                color: Colors.grey,
-                blurRadius: 10,
-                spreadRadius: 2,
-                offset: Offset(0, 5))
+            BoxShadow(blurRadius: 5, spreadRadius: 0.4, offset: Offset(0, 5))
           ],
         ),
         child: Padding(
