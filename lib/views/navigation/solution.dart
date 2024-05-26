@@ -1,4 +1,5 @@
-import 'package:cropsight/services/management.dart';
+import 'package:cropsight/services/insectjson.dart';
+import 'package:cropsight/services/readjson.dart';
 import 'package:cropsight/views/descript/manDesc.dart';
 import 'package:flutter/material.dart';
 
@@ -9,29 +10,9 @@ class SolutionTab extends StatefulWidget {
   State<SolutionTab> createState() => _SolutionTabState();
 }
 
-List<Management> mg = [
-  Management(
-      inPic1:
-          'http://www.knowledgebank.irri.org/images/stories/factsheet-green-leafhopper-1.jpg',
-      inName1: 'Green LeafHopper',
-      inMan: 'Intest'),
-  Management(
-      inPic1:
-          'http://www.knowledgebank.irri.org/images/stories/leaf-folder-moth.jpg',
-      inName1: 'Rice Leaffolder',
-      inMan: 'Intest'),
-  Management(
-      inPic1:
-          'http://www.knowledgebank.irri.org/images/stories/factsheet-ricebug-2.jpg',
-      inName1: 'Rice Bug',
-      inMan: 'Intest'),
-  Management(
-      inPic1: 'http://www.knowledgebank.irri.org/images/stories/stem-borer.jpg',
-      inName1: 'Stem Borer',
-      inMan: 'Intest'),
-];
-
 class _SolutionTabState extends State<SolutionTab> {
+  final RemoteJson remoteJson = RemoteJson();
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -50,67 +31,93 @@ class _SolutionTabState extends State<SolutionTab> {
           const SizedBox(
             height: 20,
           ),
-          GridView.builder(
-            shrinkWrap: true,
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            itemCount: mg.length,
-            itemBuilder: (ctx, i) {
-              return InkWell(
-                borderRadius: const BorderRadius.all(Radius.circular(20)),
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ManageDesc(
-                            img: mg[i].inPic1,
-                            name: mg[i].inName1,
-                            desc: mg[i].inMan),
-                      ));
-                },
-                child: Ink(
-                  decoration: BoxDecoration(
-                      color: Theme.of(context).brightness == Brightness.light
-                          ? Colors.white
-                          : Colors.black,
-                      borderRadius:
-                          const BorderRadius.all(Radius.circular(20))),
-                  child: Padding(
-                    padding: const EdgeInsets.all(15),
-                    child: Column(
-                      children: [
-                        Container(
-                            decoration: const BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10))),
-                            child: ClipRRect(
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(10)),
-                              child: Image.network(
-                                mg[i].inPic1,
-                                height: 100,
-                                width: 100,
-                                fit: BoxFit.cover,
+          FutureBuilder<Insects>(
+            future: remoteJson.allData(),
+            builder: (context, snap) {
+              if (snap.connectionState == ConnectionState.waiting) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else if (snap.hasError) {
+                return Center(
+                  child: Text('${snap.error}'),
+                );
+              } else if (snap.hasData) {
+                Insects insList = snap.data!;
+                return GridView.builder(
+                  shrinkWrap: true,
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  itemCount: insList.cropsightData.insectManage.length,
+                  itemBuilder: (ctx, i) {
+                    InsectManage manageDt =
+                        insList.cropsightData.insectManage[i];
+                    return InkWell(
+                      borderRadius: const BorderRadius.all(Radius.circular(20)),
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ManageDesc(
+                                img: manageDt.insectPic,
+                                name: manageDt.insectName,
+                                culturalMn: manageDt.cultureMn,
+                                biologicalMn: manageDt.biologicalMn,
+                                chemicalMn: manageDt.chemicalMn,
                               ),
-                            )),
-                        Text(
-                          mg[i].inName1,
-                          style: const TextStyle(
-                              fontWeight: FontWeight.w700, fontSize: 20),
+                            ));
+                      },
+                      child: Ink(
+                        decoration: BoxDecoration(
+                            color:
+                                Theme.of(context).brightness == Brightness.light
+                                    ? Colors.white
+                                    : Colors.black,
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(20))),
+                        child: Padding(
+                          padding: const EdgeInsets.all(15),
+                          child: Column(
+                            children: [
+                              Container(
+                                  decoration: const BoxDecoration(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(10))),
+                                  child: ClipRRect(
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(10)),
+                                    child: Image.network(
+                                      manageDt.insectPic,
+                                      height: 100,
+                                      width: 100,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  )),
+                              Text(
+                                manageDt.insectName,
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.w700, fontSize: 20),
+                              ),
+                            ],
+                          ),
                         ),
-                      ],
-                    ),
+                      ),
+                    );
+                  },
+                  gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                    maxCrossAxisExtent: 200,
+                    childAspectRatio: 1,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
+                    mainAxisExtent: 200,
                   ),
-                ),
-              );
+                );
+              } else {
+                return const Center(
+                  child: Text('There is no Data Found'),
+                );
+              }
             },
-            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-              maxCrossAxisExtent: 200,
-              childAspectRatio: 1,
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 10,
-              mainAxisExtent: 200,
-            ),
-          ),
+          )
         ],
       ),
     );

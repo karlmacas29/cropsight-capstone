@@ -29,7 +29,7 @@ class _HomePageNavState extends State<HomePageNav> {
     return Scaffold(
       backgroundColor: Theme.of(context).brightness == Brightness.light
           ? const Color.fromRGBO(244, 253, 255, 1)
-          : const Color.fromRGBO(18, 18, 18, 1),
+          : const Color.fromARGB(255, 41, 41, 41),
       appBar: PreferredSize(
         preferredSize: const Size.square(80),
         child: Container(
@@ -37,7 +37,7 @@ class _HomePageNavState extends State<HomePageNav> {
           child: AppBar(
             backgroundColor: Theme.of(context).brightness == Brightness.light
                 ? const Color.fromRGBO(244, 253, 255, 1)
-                : const Color.fromRGBO(18, 18, 18, 1),
+                : const Color.fromARGB(255, 41, 41, 41),
             scrolledUnderElevation: 0.0,
             actions: [
               IconButton(

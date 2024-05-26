@@ -2,9 +2,15 @@ import 'package:flutter/material.dart';
 
 class ManageDesc extends StatefulWidget {
   const ManageDesc(
-      {super.key, required this.name, required this.img, required this.desc});
+      {super.key,
+      required this.name,
+      required this.img,
+      required this.culturalMn,
+      required this.biologicalMn,
+      required this.chemicalMn});
 
-  final String name, img, desc;
+  final String name, img;
+  final List<String> culturalMn, biologicalMn, chemicalMn;
 
   @override
   State<ManageDesc> createState() => _ManageDescState();
@@ -80,7 +86,33 @@ class _ManageDescState extends State<ManageDesc> {
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
                     ),
-                    Text(widget.desc),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    const Text(
+                      'Cultural',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
+                    ...widget.culturalMn.map((method) => ListTile(
+                          title: Text(method),
+                        )),
+                    const Text(
+                      'Biological',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
+                    ...widget.biologicalMn.map((method) => ListTile(
+                          title: Text(method),
+                        )),
+                    const Text(
+                      'Chemical',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
+                    ...widget.chemicalMn.map((method) => ListTile(
+                          title: Text(method),
+                        ))
                   ],
                 )
               ],
