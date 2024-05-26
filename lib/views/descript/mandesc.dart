@@ -32,6 +32,9 @@ class _ManageDescState extends State<ManageDesc> {
         scrolledUnderElevation: 0.0,
       ),
       body: Material(
+        color: Theme.of(context).brightness == Brightness.light
+            ? const Color.fromRGBO(244, 253, 255, 1)
+            : const Color.fromRGBO(18, 18, 18, 1),
         child: Center(
           child: Padding(
             padding: const EdgeInsets.all(20.0),
