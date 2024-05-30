@@ -4,7 +4,7 @@
             {
                 "insectID" : 1,
                 "insectName": "Green LeafHopper",
-                "insectPic": "http://www.knowledgebank.irri.org/images/stories/factsheet-green-leafhopper-1.jpg",
+                "insectPic": "assets/images/greenleafhopper/1s.jpg",
                 "insectDesc": "Green leafhoppers are the most common leafhoppers in rice fields and are primarily critical because they spread the viral disease tungro. Both nymphs and adults feed by extracting plant sap with their needle-shaped mouthparts.",
                 "insectWhere": "Grasses found near irrigation canals and levees, and rice ratoons are favorable for feeding and egg-laying. Tillering and panicle initiation stages are most favorable for their multiplication, although seedling to booting stages are also susceptible. They jump readily when disturbed. They are active in summer and become sluggish during cold weather. Thus, their numbers decline drastically. To quickly detect them, either tap vigorously several plants, stopping now and then as one walks through a field, or sweep rice foliage with an insect net.",
                 "insectDamage" : "Adults and nymphs cause direct damage to the rice plant by sucking the sap from leaf sheaths and leaf blades. GLH also cause indirect damage by injecting toxic chemicals and transmitting viruses (tungro, dwarf, transitory yellowing, and yellow- orange leaf) and a mycoplasma disease (yellow dwarf). They mostly confine themselves and feed on the leaf and leaf sheath of rice. Mild infestations reduce plant vigor and number of productive tillers. Heavy infestations cause withering and complete drying of the crop."
@@ -12,7 +12,7 @@
             {
                 "insectID" : 2,
                 "insectName": "Rice Leaffolder",
-                "insectPic": "http://www.knowledgebank.irri.org/images/stories/leaf-folder-moth.jpg",
+                "insectPic": "assets/images/riceleaffolder/1s.jpg",
                 "insectDesc": "Leaffolder caterpillars fold a rice leaf around themselves and attach the leaf margins together with silk strands.",
                 "insectWhere": "Leaffolders live in all environments but are abundant during the rainy season. High humidity, shady areas of the field, and excessive use of nitrogenous fertilizers favor their rapid multiplication.",
                 "insectDamage" : "Leaffolders inflict damage in the larva stage. Plants are susceptible to attack up to 10 weeks after transplanting (i.e., from seedling to flowering). Infestation usually occurs during early growth stages of the rice crop. The larvae infest the leaves of young plants; they fasten the edges of a leaf together and live inside the rolled leaf. Heavy infestation makes the plant look burnt, sickly, and twig-like."
@@ -20,7 +20,7 @@
             {
                 "insectID" : 3,
                 "insectName": "Rice Bug",
-                "insectPic": "http://www.knowledgebank.irri.org/images/stories/factsheet-ricebug-2.jpg",
+                "insectPic": "assets/images/ricebug/factsheet-ricebug-2.jpg",
                 "insectDesc": "Rice bugs damage rice by sucking out the contents of developing grains from pre-flowering spikelets to soft dough stage, therefore causing unfilled or empty grains and discoloration. Immature and adult rice bugs both feed on rice grains.",
                 "insectWhere": "Bugs are found in all environments but are prevalent in rainfed wetland or upland rice. They are destructive in areas where rainfall is evenly distributed throughout the year, and also in irrigated crops. Extensive weedy areas of rice fields, wild grasses near canals, staggered rice planting, rice fields adjacent to woodlands, and coconut plantations favor bug multiplication. Susceptible growth stages are from flowering to milky stage.",
                 "insectDamage" : "Adults and nymphs appear in the young crop with the early rains. They suck sap from the developing grains at the milky stage. All soft milky grains are susceptible to attack. Panicles in heavily infested fields remain erect. Insect attack results in discolored or shriveled grains; off-smell of raw and cooked rice, and off-flavor of straws, which is unattractive to cattle. Before grain formation, the bugs feed on succulent shoots and leaves. Nymphs cause more damage than adults."
@@ -28,7 +28,7 @@
             {
                 "insectID" : 4,
                 "insectName": "Stem Borer",
-                "insectPic": "http://www.knowledgebank.irri.org/images/stories/stem-borer.jpg",
+                "insectPic": "assets/images/stemborer/4s.jpg",
                 "insectDesc": "Stem borers can destroy rice at any stage of the plant from seedling to maturity.",
                 "insectWhere": "The stem borer larvae bore at the base of the plants during the vegetative stage. On older plants, they bore through the upper nodes and feed toward the base. The yellow stem borer is a pest of deepwater rice. It is found in aquatic environments where there is continuous flooding. Second instar larvae enclose themselves in body leaf wrappings to make tubes and detach themselves from the leaf and falls onto the water surface. They attach themselves to the tiller and bore into the stem.",
                 "insectDamage" : "Yellow stem borer is a notorious pest of deepwater rice. It is abundant in aquatic habitats where flooding occurs and where multiple rice crops are grown annually. Rice plants at the vegetative and early heading stages are preferred for egg-laying. Plants receiving high nitrogenous fertilizers are also favorable to larval survival. Only one larva can be found in a stem. To detect the presence of moth, flush the borders of the field. To monitor larval densities, dissect tillers at tiller elongation and panicle initiation stages. For eggmasses, check seedbed or newly established crop at weekly intervals starting 3 weeks after transplanting up to 9 WAT. Egg-laying can peak at 3.5 eggmass/m².\nWhite Stem Borer: \n Predominant in rainfed areas where there is only one wet season crop per year, and where stubbles are left undisturbed during the dry season. Upland rice is susceptible to WSB species, as the larvae cannot survive extremely wet situations. Thus, this insect does not occur in areas with high rainfall. Early in the season, deadhearts are caused in the nurseries and in the young crop, while later in the cropping season subsequent generations cause whiteheads. WSB is presently found in the Visayas and Mindanao.'"
@@ -38,7 +38,7 @@
             {
                 "insectId" : 1,
                 "insectName" : "Green LeafHopper",
-                "insectPic": "http://www.knowledgebank.irri.org/images/stories/factsheet-green-leafhopper-1.jpg",
+                "insectPic": "assets/images/greenleafhopper/1s.jpg",
                 "cultureMn": [
                     "• Seedbeds should be raised, far from light sources, and covered with mesh cloth to limit virus infection and early damage by leafhoppers.",
                     "• Mobile nurseries planted to a set of different susceptible and resistant varieties can be used to detect the percentage of virus infection before transplanting. The nursery boxes can be set under lights to attract leafhoppers. The percentage of infected seedlings can be determined by the iodine diagnostic test.",
@@ -65,7 +65,7 @@
             {
                 "insectId" : 2,
                 "insectName" : "Rice Leaffolder",
-                "insectPic": "http://www.knowledgebank.irri.org/images/stories/leaf-folder-moth.jpg",
+                "insectPic": "assets/images/riceleaffolder/1s.jpg",
                 "cultureMn": [
                     "• Clipping tops of bundled seedlings before transplanting removes eggs.",
                     "• Removing weeds prevents leaffolder buildup.",
@@ -88,7 +88,7 @@
             {
                 "insectId" : 3,
                 "insectName" : "Rice Bug",
-                "insectPic": "http://www.knowledgebank.irri.org/images/stories/factsheet-ricebug-2.jpg",
+                "insectPic": "assets/images/ricebug/factsheet-ricebug-2.jpg",
                 "cultureMn": [
                     "• Eliminate grassy weeds from rice fields, levees, and surrounding areas either by cutting or burning to reduce habitats for egg-laying.",
                     "• Avoid staggered planting of fields to break continuous food source.",
@@ -111,7 +111,7 @@
             {
                 "insectId" : 4,
                 "insectName" : "Stem Borer",
-                "insectPic": "http://www.knowledgebank.irri.org/images/stories/stem-borer.jpg",
+                "insectPic": "assets/images/stemborer/4s.jpg",
                 "cultureMn": [
                     "The following tactics are necessary for community-wide implementation at various crop stages. However, it would also depend on the prevailing local conditions.",
                     "Before sowing: \t",

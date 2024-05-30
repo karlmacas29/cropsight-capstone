@@ -179,7 +179,7 @@ class _HomeTabState extends State<HomeTab> {
                 ? Colors.white
                 : const Color.fromARGB(255, 26, 26, 26),
             child: const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -200,10 +200,11 @@ class _HomeTabState extends State<HomeTab> {
                       ),
                       Expanded(
                         child: Text(
-                          'Turn your mobile phone into a crop insect identifier',
+                          'Turn your mobile phone into a crop insect identifier.',
                           style: TextStyle(
                             overflow: TextOverflow.clip,
                           ),
+                          textAlign: TextAlign.justify,
                         ),
                       )
                     ],
@@ -224,10 +225,11 @@ class _HomeTabState extends State<HomeTab> {
                       ),
                       Expanded(
                         child: Text(
-                          'With just one photo. CropSight diagnosis infected crops and offers a management options for any insects damage',
+                          'With just one photo, CropSight diagnoses infected crops and offers management options for any insect damage.',
                           style: TextStyle(
                             overflow: TextOverflow.clip,
                           ),
+                          textAlign: TextAlign.justify,
                         ),
                       )
                     ],
@@ -248,10 +250,11 @@ class _HomeTabState extends State<HomeTab> {
                       ),
                       Expanded(
                         child: Text(
-                          'CropSight will give you a insect wikipedia to give a info about different crop insects',
+                          'CropSight will give you an insect wikipedia page with information about different crop insects.',
                           style: TextStyle(
                             overflow: TextOverflow.clip,
                           ),
+                          textAlign: TextAlign.justify,
                         ),
                       )
                     ],

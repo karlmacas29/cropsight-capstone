@@ -1,3 +1,4 @@
+import 'package:cropsight/models/imageview.dart';
 import 'package:flutter/material.dart';
 
 class ManageDesc extends StatefulWidget {
@@ -49,17 +50,26 @@ class _ManageDescState extends State<ManageDesc> {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: Image.network(
-                          width: 100,
-                          height: 100,
-                          widget.img,
-                          fit: BoxFit.cover,
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      ViewFullImg(img: widget.img)));
+                        },
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: Image.asset(
+                            widget.img,
+                            height: 100,
+                            width: 100,
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
                       const SizedBox(
-                        width: 10,
+                        width: 15,
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -71,7 +81,6 @@ class _ManageDescState extends State<ManageDesc> {
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
                                   fontSize: 20, fontWeight: FontWeight.bold)),
-                          const Text('Type: Insect')
                         ],
                       )
                     ],
@@ -101,6 +110,7 @@ class _ManageDescState extends State<ManageDesc> {
                           title: Text(
                             method,
                             textAlign: TextAlign.justify,
+                            style: const TextStyle(height: 1.1),
                           ),
                         )),
                     const Text(
@@ -112,6 +122,7 @@ class _ManageDescState extends State<ManageDesc> {
                           title: Text(
                             method,
                             textAlign: TextAlign.justify,
+                            style: const TextStyle(height: 1.1),
                           ),
                         )),
                     const Text(
@@ -123,6 +134,7 @@ class _ManageDescState extends State<ManageDesc> {
                           title: Text(
                             method,
                             textAlign: TextAlign.justify,
+                            style: const TextStyle(height: 1.1),
                           ),
                         ))
                   ],

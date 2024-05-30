@@ -90,7 +90,7 @@ class _WelcomePageOneState extends State<WelcomePageOne> {
                       WidgetStatePropertyAll(Color.fromRGBO(2, 101, 0, 1)),
                 ),
                 child: const Text(
-                  'Lets get started',
+                  'Let\'s get started',
                   style: TextStyle(color: Colors.white),
                 ))
             // ClickButton(

@@ -126,6 +126,7 @@ class _CropsightTabState extends State<CropsightTab> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => InfoPage(
+                                            id: insectdt.insectId,
                                             image: insectdt.insectPic,
                                             name: insectdt.insectName,
                                             desc: insectdt.insectDesc,
@@ -135,7 +136,7 @@ class _CropsightTabState extends State<CropsightTab> {
                             },
                             leading: ClipRRect(
                               borderRadius: BorderRadius.circular(10),
-                              child: Image.network(
+                              child: Image.asset(
                                 width: 50,
                                 height: 50,
                                 insectdt.insectPic,

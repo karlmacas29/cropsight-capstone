@@ -43,6 +43,8 @@ dependencies:
   file_picker: ^8.0.3
   shared_preferences: ^2.2.3
   provider: ^6.1.2
+  infinite_carousel: ^1.1.1
+  flutter_carousel_widget: ^2.2.0
 
 dev_dependencies:
   flutter_test:
@@ -78,6 +80,11 @@ flutter:
       - assets/background/
       - assets/background/Splash Screen.png
       - assets/background/BAKGROUND1.png
+      - assets/images/greenleafhopper/
+      - assets/images/ricebug/
+      - assets/images/riceleaffolder/
+      - assets/images/stemborer/
+      - assets/images/ricebug/sss.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

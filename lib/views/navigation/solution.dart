@@ -89,7 +89,7 @@ class _SolutionTabState extends State<SolutionTab> {
                                     child: ClipRRect(
                                       borderRadius: const BorderRadius.all(
                                           Radius.circular(10)),
-                                      child: Image.network(
+                                      child: Image.asset(
                                         manageDt.insectPic,
                                         height: 100,
                                         width: 100,
