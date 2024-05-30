@@ -2,7 +2,6 @@ import 'package:cropsight/services/insectjson.dart';
 import 'package:cropsight/services/readjson.dart';
 import 'package:cropsight/views/descript/information.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class CropsightTab extends StatefulWidget {
   const CropsightTab({super.key});

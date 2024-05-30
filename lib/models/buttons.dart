@@ -8,13 +8,12 @@ class ClickButton extends StatelessWidget {
   final Color textColor;
 
   const ClickButton(
-      {Key? key,
+      {super.key,
       this.function,
       required this.backgroundColor,
       required this.borderColor,
       required this.text,
-      required this.textColor})
-      : super(key: key);
+      required this.textColor});
 
   @override
   Widget build(BuildContext context) {

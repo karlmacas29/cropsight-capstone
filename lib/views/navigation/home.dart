@@ -4,6 +4,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:tflite/tflite.dart';
 
 class HomeTab extends StatefulWidget {
   const HomeTab({super.key});
@@ -13,146 +14,51 @@ class HomeTab extends StatefulWidget {
 }
 
 class _HomeTabState extends State<HomeTab> {
+  final picker = ImagePicker();
   File? _image;
+  bool? _loading;
 
-  Future<void> pickImage() async {
-    final permissionStatus = await _getPermissionStatus();
-    if (permissionStatus == PermissionStatus.granted) {
-      try {
-        FilePickerResult? result = await FilePicker.platform.pickFiles(
-          type: FileType.any,
-        );
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _loading = true;
+    loadML().then((value) {
+      setState(() {
+        _loading = false;
+      });
+    });
+  }
 
-        if (result != null && result.files.single.path != null) {
-          setState(() {
-            _image?.deleteSync(); // Delete the previous image file if it exists
-            _image = File(result.files.single.path!);
-          });
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => ScanPage(imageSc: _image),
-            ),
+  loadML() async {
+    Tflite.close();
+    try {
+      await Tflite.loadModel(
+          model: "assets/mobilenet_v1_1.0_224.tflite",
+          labels: "assets/labels.txt",
+          numThreads: 1, // defaults to 1
+          isAsset:
+              true, // defaults to true, set to false to load resources outside assets
+          useGpuDelegate:
+              false // defaults to false, set to true to use GPU delegate
           );
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('No image selected')),
-          );
-        }
-      } catch (e) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to pick image: $e')),
-        );
-      }
-    } else {
-      // Handle the case when permission is denied
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Permission denied')),
-      );
+    } on Exception catch (e) {
+      print('error ${e.toString()}');
     }
   }
 
-  Future<PermissionStatus> _getPermissionStatus() async {
-    if (await Permission.storage.request().isGranted) {
-      return PermissionStatus.granted;
-    } else {
-      // For Android 14+, handle the new permissions
-      if (await Permission.photos.request().isGranted) {
-        return PermissionStatus.granted;
-      } else if (await Permission.mediaLibrary.request().isGranted) {
-        return PermissionStatus.granted;
-      }
-    }
-    return PermissionStatus.denied;
-  }
+  runModelonImage(File image) async {
+    var img = image;
+    var output = await Tflite.runModelOnImage(
+        path: image.path,
+        numResults: 5,
+        imageMean: 127.5,
+        imageStd: 127.5,
+        threshold: 0.5);
 
-  Future<void> getImage(BuildContext context, ImageSource source) async {
-    final cameraStatus = await Permission.camera.status;
-    final photosStatus = await Permission.photos.status;
-
-    if (cameraStatus.isDenied || photosStatus.isDenied) {
-      final requestCamera = await Permission.camera.request().isGranted;
-      final requestPhotos = await Permission.photos.request().isGranted;
-
-      if (!requestCamera || !requestPhotos) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Permission denied')),
-        );
-        return;
-      }
-    }
-
-    if (cameraStatus.isPermanentlyDenied || photosStatus.isPermanentlyDenied) {
-      showDialog<void>(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('Permission Error'),
-            content: const SingleChildScrollView(
-              child: ListBody(
-                children: <Widget>[
-                  Text(
-                      'This app needs camera and photo access to function properly. Please grant the permissions in the settings.'),
-                ],
-              ),
-            ),
-            actions: <Widget>[
-              TextButton(
-                child: const Text('Open Settings'),
-                onPressed: () async {
-                  await openAppSettings();
-                },
-              ),
-            ],
-          );
-        },
-      );
-      return;
-    }
-
-    if (await Permission.camera.isGranted &&
-        await Permission.photos.isGranted) {
-      try {
-        final pickedFile = await ImagePicker().getImage(source: source);
-
-        if (pickedFile != null) {
-          setState(() {
-            _image?.deleteSync(); // Delete the previous image file if it exists
-            _image = File(pickedFile.path);
-          });
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => ScanPage(imageSc: _image),
-            ),
-          );
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('No image selected')),
-          );
-        }
-      } catch (e) {
-        showDialog(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              title: const Text('Error'),
-              content: const Text(
-                  'An error occurred while picking the image. Please try again.'),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: const Text('OK'),
-                ),
-              ],
-            );
-          },
-        );
-      }
-    }
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return ScanPage(imageSc: img, output: output);
+    }));
   }
 
   @override
@@ -373,5 +279,137 @@ class _HomeTabState extends State<HomeTab> {
         ],
       ),
     );
+  }
+
+  Future<void> pickImage() async {
+    final permissionStatus = await _getPermissionStatus();
+    if (permissionStatus == PermissionStatus.granted) {
+      try {
+        FilePickerResult? result = await FilePicker.platform.pickFiles(
+          type: FileType.any,
+        );
+
+        if (result != null && result.files.single.path != null) {
+          setState(() {
+            _image?.deleteSync(); // Delete the previous image file if it exists
+            _image = File(result.files.single.path!);
+          });
+          var im = _image = File(result.files.single.path!);
+          // runModelonImage(im);
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('No image selected')),
+          );
+        }
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to pick image: $e')),
+        );
+      }
+    } else {
+      // Handle the case when permission is denied
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Permission denied')),
+      );
+    }
+  }
+
+  Future<PermissionStatus> _getPermissionStatus() async {
+    if (await Permission.storage.request().isGranted) {
+      return PermissionStatus.granted;
+    } else {
+      // For Android 14+, handle the new permissions
+      if (await Permission.photos.request().isGranted) {
+        return PermissionStatus.granted;
+      } else if (await Permission.mediaLibrary.request().isGranted) {
+        return PermissionStatus.granted;
+      }
+    }
+    return PermissionStatus.denied;
+  }
+
+  Future<void> getImage(BuildContext context, ImageSource source) async {
+    final cameraStatus = await Permission.camera.status;
+    final photosStatus = await Permission.photos.status;
+
+    if (cameraStatus.isDenied || photosStatus.isDenied) {
+      final requestCamera = await Permission.camera.request().isGranted;
+      final requestPhotos = await Permission.photos.request().isGranted;
+
+      if (!requestCamera || !requestPhotos) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Permission denied')),
+        );
+        return;
+      }
+    }
+
+    if (cameraStatus.isPermanentlyDenied || photosStatus.isPermanentlyDenied) {
+      showDialog<void>(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Permission Error'),
+            content: const SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  Text(
+                      'This app needs camera and photo access to function properly. Please grant the permissions in the settings.'),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: const Text('Open Settings'),
+                onPressed: () async {
+                  await openAppSettings();
+                },
+              ),
+            ],
+          );
+        },
+      );
+      return;
+    }
+
+    if (await Permission.camera.isGranted &&
+        await Permission.photos.isGranted) {
+      try {
+        final pickedFile = await ImagePicker().getImage(source: source);
+
+        if (pickedFile != null) {
+          setState(() {
+            _image?.deleteSync(); // Delete the previous image file if it exists
+            _image = File(pickedFile.path);
+          });
+          var im = _image = File(pickedFile.path);
+          // runModelonImage(im);
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('No image selected')),
+          );
+        }
+      } catch (e) {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: const Text('Error'),
+              content: const Text(
+                  'An error occurred while picking the image. Please try again.'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
+      }
+    }
   }
 }
