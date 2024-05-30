@@ -4,7 +4,8 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:tflite/tflite.dart';
+import 'package:provider/provider.dart';
+import 'package:tflite_v2/tflite_v2.dart';
 
 class HomeTab extends StatefulWidget {
   const HomeTab({super.key});
@@ -22,19 +23,18 @@ class _HomeTabState extends State<HomeTab> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _loading = true;
+    _loading = false;
     loadML().then((value) {
       setState(() {
-        _loading = false;
+        _loading = true;
       });
     });
   }
 
   loadML() async {
-    Tflite.close();
     try {
       await Tflite.loadModel(
-          model: "assets/mobilenet_v1_1.0_224.tflite",
+          model: "assets/cnn_model1.tflite",
           labels: "assets/labels.txt",
           numThreads: 1, // defaults to 1
           isAsset:
@@ -50,15 +50,23 @@ class _HomeTabState extends State<HomeTab> {
   runModelonImage(File image) async {
     var img = image;
     var output = await Tflite.runModelOnImage(
-        path: image.path,
-        numResults: 5,
-        imageMean: 127.5,
-        imageStd: 127.5,
-        threshold: 0.5);
-
+      path: image.path,
+      numResults: 5,
+      threshold: 0.5,
+      imageMean: 0.0,
+      imageStd: 255.0,
+      asynch: true,
+    );
+    print(output);
     Navigator.push(context, MaterialPageRoute(builder: (context) {
       return ScanPage(imageSc: img, output: output);
     }));
+  }
+
+  @override
+  void dispose() {
+    Tflite.close();
+    super.dispose();
   }
 
   @override
@@ -295,7 +303,7 @@ class _HomeTabState extends State<HomeTab> {
             _image = File(result.files.single.path!);
           });
           var im = _image = File(result.files.single.path!);
-          // runModelonImage(im);
+          runModelonImage(im);
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('No image selected')),
@@ -384,7 +392,7 @@ class _HomeTabState extends State<HomeTab> {
             _image = File(pickedFile.path);
           });
           var im = _image = File(pickedFile.path);
-          // runModelonImage(im);
+          runModelonImage(im);
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('No image selected')),

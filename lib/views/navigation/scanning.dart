@@ -27,8 +27,13 @@ class _ScanPageState extends State<ScanPage> {
             Visibility(
                 visible: _loading, child: const LinearProgressIndicator()),
             widget.imageSc == null
-                ? const Text('No image selected.')
-                : Image.file(widget.imageSc!),
+                ? const Text('Error Try Again')
+                : Image.file(
+                    widget.imageSc!,
+                    height: 200,
+                    width: 200,
+                    fit: BoxFit.cover,
+                  ),
             const SizedBox(height: 16),
             widget.output != null
                 ? Text(
@@ -36,8 +41,13 @@ class _ScanPageState extends State<ScanPage> {
                     textAlign: TextAlign.center,
                     style: const TextStyle(fontSize: 20),
                   )
-                : Container(),
+                : const Text('Not a Rice', style: TextStyle(fontSize: 20)),
             const SizedBox(height: 20),
+            widget.output![0]['label'].toString() == "Rice Dead Heart"
+                ? const Text('Cause of Insect: Stem Borer')
+                : widget.output![0]['label'].toString() == "Tungro"
+                    ? const Text('Cause of Insect: Green Leafhopper')
+                    : const Text('No Insect')
           ],
         ),
       ),
