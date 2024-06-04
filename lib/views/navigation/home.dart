@@ -1,10 +1,12 @@
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:cropsight/views/navigation/scanning.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:provider/provider.dart';
+
+import 'package:image/image.dart' as img;
 import 'package:tflite_v2/tflite_v2.dart';
 
 class HomeTab extends StatefulWidget {
@@ -17,50 +19,54 @@ class HomeTab extends StatefulWidget {
 class _HomeTabState extends State<HomeTab> {
   final picker = ImagePicker();
   File? _image;
-  bool? _loading;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    _loading = false;
+    Tflite.close();
     loadML().then((value) {
       setState(() {
-        _loading = true;
+        print('Model has been loaded!');
       });
     });
   }
 
-  loadML() async {
+  Future<void> loadML() async {
     try {
       await Tflite.loadModel(
-          model: "assets/cnn_model1.tflite",
-          labels: "assets/labels.txt",
-          numThreads: 1, // defaults to 1
-          isAsset:
-              true, // defaults to true, set to false to load resources outside assets
-          useGpuDelegate:
-              false // defaults to false, set to true to use GPU delegate
-          );
+        model: "assets/mobilenet.tflite", // trained model
+        labels: "assets/labels.txt", // class label by order
+        numThreads: 1, // defaults to 1
+        isAsset:
+            true, // defaults to true, set to false to load resources outside assets
+        useGpuDelegate:
+            false, // defaults to false, set to true to use GPU delegate
+      );
     } on Exception catch (e) {
-      print('error ${e.toString()}');
+      print('Error loading model: ${e.toString()}');
     }
   }
 
-  runModelonImage(File image) async {
-    var img = image;
-    var output = await Tflite.runModelOnImage(
-      path: image.path,
-      numResults: 5,
-      threshold: 0.5,
-      imageMean: 0.0,
-      imageStd: 255.0,
-      asynch: true,
-    );
-    print(output);
-    Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return ScanPage(imageSc: img, output: output);
-    }));
+  Future<void> runModelOnImage(File? image) async {
+    try {
+      var img = image;
+      var output = await Tflite.runModelOnImage(
+        path: img!.path,
+        numResults: 5,
+        threshold: 0.0,
+        imageMean: 0.0,
+        imageStd: 1.0,
+        asynch: true,
+      );
+
+      print(output);
+      Navigator.pop(context);
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return ScanPage(imageSc: img, output: output);
+      }));
+    } on Exception catch (e) {
+      print('Code error: $e');
+    }
   }
 
   @override
@@ -294,7 +300,7 @@ class _HomeTabState extends State<HomeTab> {
     if (permissionStatus == PermissionStatus.granted) {
       try {
         FilePickerResult? result = await FilePicker.platform.pickFiles(
-          type: FileType.any,
+          type: FileType.image,
         );
 
         if (result != null && result.files.single.path != null) {
@@ -303,7 +309,10 @@ class _HomeTabState extends State<HomeTab> {
             _image = File(result.files.single.path!);
           });
           var im = _image = File(result.files.single.path!);
-          runModelonImage(im);
+          showBottomModal(context);
+          Future.delayed(const Duration(seconds: 3), () {
+            runModelOnImage(im);
+          });
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('No image selected')),
@@ -392,7 +401,10 @@ class _HomeTabState extends State<HomeTab> {
             _image = File(pickedFile.path);
           });
           var im = _image = File(pickedFile.path);
-          runModelonImage(im);
+          showBottomModal(context);
+          Future.delayed(const Duration(seconds: 3), () {
+            runModelOnImage(im);
+          });
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('No image selected')),
@@ -419,5 +431,75 @@ class _HomeTabState extends State<HomeTab> {
         );
       }
     }
+  }
+
+  //modal loading cool
+  showBottomModal(context) {
+    showModalBottomSheet(
+        isDismissible: false,
+        context: context,
+        backgroundColor: Colors.transparent,
+        builder: (builder) {
+          return Container(
+            height: 200,
+            color: Colors.transparent,
+            child: Container(
+              decoration: BoxDecoration(
+                color: Theme.of(context).brightness == Brightness.light
+                    ? Colors.white
+                    : const Color.fromARGB(255, 26, 26, 26),
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(10.0),
+                  topRight: Radius.circular(10.0),
+                ),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Colors.black26,
+                    blurRadius: 10.0, // has the effect of softening the shadow
+                    spreadRadius: 0.0, // has the effect of extending the shadow
+                  )
+                ],
+              ),
+              alignment: Alignment.center,
+              child: Column(
+                children: <Widget>[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Container(
+                        margin: const EdgeInsets.only(top: 5, left: 10),
+                        child: const Text(
+                          "Scanning Please Wait",
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w900,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 5),
+                  Container(
+                    padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+                    child: const Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: 10,
+                        ),
+                        CircularProgressIndicator(
+                          color: Colors.green,
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
+          );
+        });
   }
 }
