@@ -44,7 +44,7 @@ class _WelcomePageOneState extends State<WelcomePageOne> {
                 Text(
                   'Crop',
                   style: TextStyle(
-                      color: Color.fromRGBO(0, 191, 98, 1),
+                      color: Color.fromRGBO(0, 175, 90, 1),
                       fontFamily: 'Inter',
                       fontSize: 64,
                       fontWeight: FontWeight.bold),

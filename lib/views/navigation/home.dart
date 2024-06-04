@@ -1,12 +1,9 @@
 import 'dart:io';
-import 'dart:typed_data';
 import 'package:cropsight/views/navigation/scanning.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
-
-import 'package:image/image.dart' as img;
 import 'package:tflite_v2/tflite_v2.dart';
 
 class HomeTab extends StatefulWidget {

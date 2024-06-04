@@ -1,18 +1,43 @@
+import 'package:cropsight/views/navigation/home.dart';
+import 'package:cropsight/views/navigation/homepage.dart';
 import 'package:cropsight/views/welcome.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class SplashScreen extends StatelessWidget {
+class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    Future.delayed(const Duration(seconds: 3), () {
-      Navigator.pushReplacement(
-        context,
+  State<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    super.initState();
+    _navigateToNextScreen();
+  }
+
+  Future<void> _navigateToNextScreen() async {
+    await Future.delayed(Duration(seconds: 3)); // Delay for 3 seconds
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool isFirstLaunch = prefs.getBool('isFirstLaunch') ?? true;
+
+    if (isFirstLaunch) {
+      await prefs.setBool('isFirstLaunch', false);
+      Navigator.of(context).push(
         MaterialPageRoute(builder: (context) => const WelcomePageOne()),
       );
-    });
+    } else {
+      Navigator.of(context).push(
+        MaterialPageRoute(builder: (context) => const HomePageNav()),
+      );
+    }
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
         fit: StackFit.expand,
