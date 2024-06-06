@@ -22,7 +22,7 @@ class _HomePageNavState extends State<HomePageNav> {
     Icons.menu_book_rounded,
   ];
 
-  final _titleAppbar = ['Home', 'Cropsight', 'Management'];
+  final _titleAppbar = ['Home', 'Cropsight', 'Solution'];
 
   @override
   Widget build(BuildContext context) {
@@ -102,7 +102,7 @@ class _HomePageNavState extends State<HomePageNav> {
               ),
               GButton(
                 icon: Icons.menu_book_rounded,
-                text: 'Management',
+                text: 'Solution',
               ),
             ],
           ),

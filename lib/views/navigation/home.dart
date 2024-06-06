@@ -28,6 +28,7 @@ class _HomeTabState extends State<HomeTab> {
     });
   }
 
+  //function Future
   Future<void> loadML() async {
     try {
       await Tflite.loadModel(
@@ -44,12 +45,13 @@ class _HomeTabState extends State<HomeTab> {
     }
   }
 
+  //run tflite
   Future<void> runModelOnImage(File? image) async {
     try {
       var img = image;
       var output = await Tflite.runModelOnImage(
         path: img!.path,
-        numResults: 5,
+        numResults: 3,
         threshold: 0.0,
         imageMean: 0.0,
         imageStd: 1.0,
